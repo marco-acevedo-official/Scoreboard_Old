@@ -119,7 +119,7 @@ begin
         dec => DEC_Sync_O,
         bcd1_out => f_bcd1_out,
         bcd0_out => f_bcd0_out,
-       seg7disp1 => f_seg7disp1,
+        seg7disp1 => f_seg7disp1,
         seg7disp0 => f_seg7disp0
     );
 end Behavioral;
