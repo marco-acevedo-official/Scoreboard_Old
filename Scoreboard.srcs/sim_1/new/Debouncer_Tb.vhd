@@ -20,10 +20,12 @@ architecture Simulation of Debouncer_Tb is
     signal sReg : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
     signal sync_deb : STD_LOGIC := '0';
     constant clk_period : time := 10 ns;
+    constant Debounce_Reg_Width : integer := 16;
 
     component Debouncer is
     Generic(
-    clock_period : time
+    clock_period : time;
+    reg_width : integer
     );
     Port ( 
            clk : in STD_LOGIC;
@@ -45,19 +47,17 @@ architecture Simulation of Debouncer_Tb is
         data_out : out std_logic
            );
     end component;
-    
-    
 
 begin
 
     UUT_Debouncer: Debouncer 
     generic map(
+    reg_width => Debounce_Reg_Width,
     clock_period => clk_period
     )
     port map (
         clk => sClk,
         input_signal => sInput,
-        --sync_signal => sSync,
         debounced_signal => sDebounced,
         reg_out => sReg
     );
@@ -76,7 +76,7 @@ begin
 
     clk_process: process
     begin                                       
-        while true loop  -- Continuous clock generation
+        while true loop
             sClk <= '0';                            
             wait for clk_period / 2;                
             sClk <= '1';                            
@@ -88,7 +88,7 @@ begin
     begin 
     
         for i in 1 to 9999 loop
-            if i > 0 and i < 8000 then --Unstable input for 100 iterations
+            if i > 0 and i < 8000 then
                 sInput <= not sInput;
                 wait for clk_period / 1000;
             elsif i = 8000 then
@@ -100,7 +100,7 @@ begin
         end loop;
         
                 for i in 1 to 9999 loop
-            if i > 0 and i < 8000 then --Unstable input for 100 iterations
+            if i > 0 and i < 8000 then
                 sInput <= not sInput;
                 wait for clk_period / 1000;
             elsif i = 8000 then
