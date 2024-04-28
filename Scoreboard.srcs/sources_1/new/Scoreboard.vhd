@@ -10,8 +10,6 @@ entity Scoreboard is
     );
 end Scoreboard;
 
---
-
 architecture Behavioral of Scoreboard is
 
 signal State: integer range 0 to 1;
@@ -47,13 +45,13 @@ process(clock_out)
 begin
 	if clock_out'event and clock_out = '1' then--if1
 		case State is
-		when 0 => -- initial state --------------------------------------------------------------------------------------------------------------------
-			BCD1 <= "0000"; BCD0 <= "0000"; -- clear counter
-			rstcnt <= 0; -- reset RESETCOUNT
+		when 0 =>
+			BCD1 <= "0000"; BCD0 <= "0000";
+			rstcnt <= 0;
 			State <= 1;
-		when 1 => -- state in which the scoreboard waits for inc and dec -----------------------------------------------------------------------------
+		when 1 =>
 			if rst = '1' then
-				if rstcnt = 4 then -- checking whether 5th reset cycle
+				if rstcnt = 4 then
 				    State <= 0;
 				else rstcnt <= rstcnt + 1;
 				end if;
@@ -62,7 +60,7 @@ begin
 			report "Increase Button Detected";
 				rstcnt <= 0;
 			    if BCD0 < "1001" then
-				    BCD0 <= BCD0 + 1; -- library with overloaded "+" required
+				    BCD0 <= BCD0 + 1;
 			    elsif BCD1 < "1001" then
 				    BCD1 <= BCD1 + 1;
 				    BCD0 <= "0000";
@@ -72,7 +70,7 @@ begin
 			     report "Decrease Button Detected";
 				rstcnt <= 0;
 			    if BCD0 > "0000" then
-				    BCD0 <= BCD0 - 1; -- library with overloaded "-" required
+				    BCD0 <= BCD0 - 1;
 			    elsif BCD1 > "0000" then
 				    BCD1 <= BCD1 - 1;
 				    BCD0 <= "1001";
@@ -86,7 +84,7 @@ begin
 	end if;--if1
 end process;
 
-seg7disp0 <= seg7rom(to_integer(BCD0)); -- type conversion function from
-seg7disp1 <= seg7rom(to_integer(BCD1)); -- IEEE numeric_std_logic package used
+seg7disp0 <= seg7rom(to_integer(BCD0));
+seg7disp1 <= seg7rom(to_integer(BCD1));
 
 end Behavioral;
