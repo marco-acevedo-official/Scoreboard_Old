@@ -15,9 +15,10 @@ end Debouncer_Tb;
 architecture Simulation of Debouncer_Tb is
     signal sClk : STD_LOGIC := '0';
     signal sInput : STD_LOGIC := '0';
-    signal sSync : STD_LOGIC := '0';
+    signal rst : STD_LOGIC := '0';
     signal sDebounced : STD_LOGIC := '0';
     signal sReg : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+    signal sync_deb : STD_LOGIC := '0';
     constant clk_period : time := 10 ns;
 
     component Debouncer is
@@ -27,11 +28,25 @@ architecture Simulation of Debouncer_Tb is
     Port ( 
            clk : in STD_LOGIC;
            input_signal : in STD_LOGIC;
-           sync_signal : in STD_LOGIC;  -- Synchronized input signal
+           --sync_signal : in STD_LOGIC;  -- Synchronized input signal
            debounced_signal : out STD_LOGIC; -- Debounced output signal
            reg_out : out STD_LOGIC_VECTOR(15 downto 0)
            );
     end component;
+    
+    component Synchronizer is
+    Generic(
+    clock_period : time
+    );
+    Port ( 
+        clk : in STD_LOGIC;
+       rst : in STD_LOGIC;
+        data_in  : in std_logic;
+        data_out : out std_logic
+           );
+    end component;
+    
+    
 
 begin
 
@@ -42,9 +57,21 @@ begin
     port map (
         clk => sClk,
         input_signal => sInput,
-        sync_signal => sSync,
+        --sync_signal => sSync,
         debounced_signal => sDebounced,
         reg_out => sReg
+    );
+    
+    
+    UUT_Synchronizer: Synchronizer 
+    generic map(
+    clock_period => clk_period
+    )
+    port map (
+    rst => rst,
+    clk => sClk,
+    data_in => sDebounced,
+    data_out => sync_deb
     );
 
     clk_process: process

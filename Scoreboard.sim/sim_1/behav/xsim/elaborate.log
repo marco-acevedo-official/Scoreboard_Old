@@ -20,5 +20,6 @@ Compiling package ieee.std_logic_unsigned
 Compiling package ieee.math_real
 Compiling package ieee.math_complex
 Compiling architecture behavioral of entity xil_defaultlib.Debouncer [debouncer_default]
+Compiling architecture arch of entity xil_defaultlib.synchronizer [synchronizer_default]
 Compiling architecture simulation of entity xil_defaultlib.debouncer_tb
 Built simulation snapshot Debouncer_Tb_behav

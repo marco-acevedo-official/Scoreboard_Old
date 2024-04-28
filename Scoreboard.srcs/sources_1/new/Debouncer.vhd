@@ -12,7 +12,7 @@ entity Debouncer is
     Port ( 
            clk : in STD_LOGIC;
            input_signal : in STD_LOGIC;
-           sync_signal : in STD_LOGIC;  -- Synchronized input signal
+           --sync_signal : in STD_LOGIC;  -- Synchronized input signal
            debounced_signal : out STD_LOGIC; -- Debounced output signal
            reg_out : out STD_LOGIC_VECTOR(15 downto 0)
            );
