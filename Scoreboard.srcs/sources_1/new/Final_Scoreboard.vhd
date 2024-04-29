@@ -1,5 +1,9 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_textio.all;
+use IEEE.std_logic_arith.all;
+use IEEE.numeric_bit.all;
+use IEEE.numeric_std.all;
 --
 entity Final_Scoreboard is
     Port (
@@ -10,9 +14,10 @@ entity Final_Scoreboard is
 end Final_Scoreboard;
 --
 architecture Behavioral of Final_Scoreboard is
+--Generic Constants
 constant clock_period : time := 20ns;
 constant Debounce_Reg_Width : integer := 16;
---SIGNALS
+--Internal SIGNALS
 signal clock_bus : STD_LOGIC := '0';
 signal RST_Deb_Reg_O : STD_LOGIC_VECTOR(Debounce_Reg_Width-1 downto 0) := (others => '0'); -- Registers for de Reset Button Debouncer
 signal INC_Deb_Reg_O : STD_LOGIC_VECTOR(Debounce_Reg_Width-1 downto 0) := (others => '0'); -- Registers for de Increase Button Debouncer
@@ -22,7 +27,11 @@ signal INC_Debounced_O : STD_LOGIC := '0'; -- Increase Signal After Debouncing
 signal DEC_Debounced_O : STD_LOGIC := '0'; -- Decrease Signal After Debouncing
 signal INC_Sync_O : STD_LOGIC := '0'; -- Increase Signal After Debouncing And Synchronizing
 signal DEC_Sync_O : STD_LOGIC := '0'; -- Decrease Signal After Debouncing And Synchronizing
---signal RST_Sync_O : STD_LOGIC := '0';
+-- Signals for entity
+signal BCD_OUT_1 : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
+signal BCD_OUT_0 : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
+signal wSeg7disp1 : unsigned(6 downto 0) := (others => '0');
+signal wSeg7disp0 : unsigned(6 downto 0) := (others => '0');
 
     component Scoreboard is
     port(
@@ -57,8 +66,8 @@ signal DEC_Sync_O : STD_LOGIC := '0'; -- Decrease Signal After Debouncing And Sy
 begin
     RST_Debouncer: Debouncer
     generic map(
-    reg_width => Debounce_Reg_Width,
-    clock_period => clock_period
+    clock_period => clock_period,
+    reg_width => Debounce_Reg_Width
     )
     port map (
         clk => clock_bus,
@@ -69,8 +78,8 @@ begin
     --
     DEC_Debouncer: Debouncer 
     generic map(
-        reg_width => Debounce_Reg_Width,
-        clock_period => clock_period
+    clock_period => clock_period,
+    reg_width => Debounce_Reg_Width
     )
     port map (
         clk => clock_bus,
@@ -81,8 +90,8 @@ begin
     --
     INC_Debouncer: Debouncer 
     generic map(
-        reg_width => Debounce_Reg_Width,
-        clock_period => clock_period
+    clock_period => clock_period,
+    reg_width => Debounce_Reg_Width
     )
     port map (
         clk => clock_bus,
@@ -117,9 +126,18 @@ begin
         rst => RST_Debounced_O,
         inc => INC_Sync_O,
         dec => DEC_Sync_O,
-        bcd1_out => f_bcd1_out,
-        bcd0_out => f_bcd0_out,
-        seg7disp1 => f_seg7disp1,
-        seg7disp0 => f_seg7disp0
+        bcd1_out => BCD_OUT_1,
+        bcd0_out => BCD_OUT_0,
+        seg7disp1 => wSeg7disp1,
+        seg7disp0 => wSeg7disp0
     );
+    
+    process(clk)
+    begin
+      f_bcd1_out  <=  BCD_OUT_1 ;
+      f_bcd0_out  <=  BCD_OUT_0 ;
+      f_seg7disp1  <=  wSeg7disp1;
+      f_seg7disp0  <=  wSeg7disp0;
+     end process;
+    
 end Behavioral;
