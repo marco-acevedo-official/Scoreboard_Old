@@ -20,6 +20,11 @@ begin --
 
 process(clk,data_in,rst)
 begin
+
+    if flag = '0' then
+        data_out <= '0';
+    end if;
+
     if rising_edge(data_in) and flag = '0' then
         flag <= '1';
         report "BUTTON PRESSED";
@@ -35,6 +40,7 @@ begin
     if rst = '1' then
         flag <= '0';
     end if;
+    
 end process;
 
 end architecture;
