@@ -5,8 +5,11 @@ use IEEE.NUMERIC_STD.ALL;
 entity Scoreboard_TB is
 end Scoreboard_TB;
 
+
+
+
 architecture Simulation of Scoreboard_TB is
-    constant clock_period : time := 10 ns;
+    constant clock_period : time := 50 ns;
     constant Debouncer_Register_Size : integer := 16;
     signal clock : std_logic := '0';
     signal reset_button : std_logic := '0';
@@ -16,6 +19,7 @@ architecture Simulation of Scoreboard_TB is
     signal Display_1 : unsigned(6 downto 0) := (others => '0');
     signal BCD_0 : std_logic_vector(3 downto 0) := (others => '0');
     signal BCD_1 : std_logic_vector(3 downto 0) := (others => '0');
+    signal Debouncer_Register : STD_LOGIC_VECTOR(Debouncer_Register_Size-1 downto 0) := (others => '0');
     
     component Debouncer is
     generic(
@@ -49,20 +53,21 @@ architecture Simulation of Scoreboard_TB is
         bcd1_out, bcd0_out : out std_logic_vector(3 downto 0)--Debug
     );
     end component;
-
-    begin
+ 
     
+    begin
+
     deb_inc : Debouncer
     generic map(
-    clock_period => clock_period,
-    reg_width => Debouncer_Register_Size
+        clock_period => clock_period,
+        reg_width => Debouncer_Register_Size
     )
     port map(
         clk => clock,
         input_signal => increase_button,
-        debounced_signal => inc_deb_to_sync
+        debounced_signal => inc_deb_to_sync,
+        reg_out => Debouncer_Register
     );
-    
     
     sync_inc: Synchronizer 
     generic map(
@@ -87,7 +92,7 @@ architecture Simulation of Scoreboard_TB is
         bcd0_out => BCD_0
     );
     
-    process
+    clock_process : process
     begin
         while true loop
             clock <= '1';
@@ -98,12 +103,14 @@ architecture Simulation of Scoreboard_TB is
     end process;
     
     
-    process
+    button_press : process
     begin
-        input_button <= '1';
+        increase_button <= '0';
+        wait for clock_period;
+        increase_button <= '1';
         wait for 10 * clock_period;
-        input_button <= '0';
-        wait;
+        increase_button <= '0';
+        wait for 10000 * clock_period;
     end process;
     
 end architecture Simulation;

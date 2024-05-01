@@ -27,11 +27,11 @@ begin
 
     if rising_edge(data_in) and flag = '0' then
         flag <= '1';
-        report "BUTTON PRESSED";
+        report "Synchronizer Flag Set 1";
     end if;
     
     if rising_edge(clk) and flag = '1' then
-        report "OUTPUT SHOULD BE HIGH";
+        report "Synchronizer data_out Set 1";
         data_out <= '1';
         data_out <= '0' after clock_period / 2;
         flag <= '0';
