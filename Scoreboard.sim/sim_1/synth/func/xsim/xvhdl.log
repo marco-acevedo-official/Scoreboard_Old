@@ -1,0 +1,8 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Users/marco/vivado/Scoreboard/Scoreboard.sim/sim_1/synth/func/xsim/Scoreboard_TB_func_synth.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Debouncer'
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Scoreboard'
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Synchronizer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'synchronizer'
+INFO: [VRFC 10-163] Analyzing VHDL file "D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sim_1/new/Scoreboard_TB.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Scoreboard_TB'

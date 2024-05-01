@@ -5,9 +5,6 @@ use IEEE.NUMERIC_STD.ALL;
 entity Scoreboard_TB is
 end Scoreboard_TB;
 
-
-
-
 architecture Simulation of Scoreboard_TB is
     constant clock_period : time := 50 ns;
     constant Debouncer_Register_Size : integer := 16;
@@ -100,7 +97,7 @@ architecture Simulation of Scoreboard_TB is
             clock <= '0';
             wait for clock_period / 2;
         end loop;
-    end process;
+    end process clock_process;
     
     
     button_press : process
@@ -111,6 +108,6 @@ architecture Simulation of Scoreboard_TB is
         wait for 10 * clock_period;
         increase_button <= '0';
         wait for 10000 * clock_period;
-    end process;
+    end process button_press;
     
 end architecture Simulation;
