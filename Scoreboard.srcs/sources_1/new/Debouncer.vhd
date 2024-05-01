@@ -1,9 +1,6 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_textio.all;
-use IEEE.std_logic_arith.all;
-use IEEE.numeric_bit.all;
-use IEEE.numeric_std.all;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity Debouncer is
     Generic (
@@ -24,20 +21,22 @@ architecture Behavioral of Debouncer is
 begin
     process(input_signal,clk)
     begin
-        for i in 0 to reg_width-1 loop
+        if rising_edge(clk) then
+        for i in 0 to reg_width-1 loop --De-Queue Shift Register
             if i < reg_width-1 then
                 debounce_reg(i) <= debounce_reg(i+1);
             else
                 debounce_reg(i) <= input_signal;
             end if;
         end loop;
+        end if;
         
         if debounce_reg = (debounce_reg'range => '1') then
           debounced_signal <= '1';
         else
             debounced_signal <= '0';
         end if;
-        reg_out <= debounce_reg;
         
+        reg_out <= debounce_reg;
     end process;
 end Behavioral;

@@ -1,45 +1,46 @@
-library ieee;
-use ieee.std_logic_1164.all;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity synchronizer is
   generic (
-    clock_period : time := 10 ns;
-    RESET_VALUE    : std_logic := '0'; -- reset value of all flip-flops in the chain
-    NUM_FLIP_FLOPS : natural := 2 -- number of flip-flops in the synchronizer chain
+    clock_period : time := 10 ns
   );
   port(
-    rst      : in std_logic; -- asynchronous, high-active
-    clk      : in std_logic; -- destination clock
+    rst      : in std_logic;
+    clk      : in std_logic;
     data_in  : in std_logic;
     data_out : out std_logic
   );
 end synchronizer;
 
-architecture arch of synchronizer is
+architecture Behavior of synchronizer is
+signal flag : std_logic := '0';
+begin -- 
 
-  --synchronizer chain of flip-flops
-  signal sync_chain : std_logic_vector(NUM_FLIP_FLOPS-1 downto 0) := (others => RESET_VALUE);
-
-  -- Xilinx XST: disable shift-register LUT (SRL) extraction
-  attribute shreg_extract : string;
-  attribute shreg_extract of sync_chain : signal is "no";
-
-  -- Vivado: set ASYNC_REG to specify registers receive asynchronous data
-  -- also acts as DONT_TOUCH
-  attribute ASYNC_REG : string;
-  attribute ASYNC_REG of sync_chain : signal is "TRUE";
-
+process(clk,data_in,rst)
 begin
 
-  main : process(clk, rst)
-  begin
-    if rst = '1' then
-      sync_chain <= (others => RESET_VALUE);
-    elsif rising_edge(clk) then
-      sync_chain <= sync_chain(sync_chain'high-1 downto 0) & data_in;
+    if flag = '0' then
+        data_out <= '0';
     end if;
-  end process;
 
-  data_out <= sync_chain(sync_chain'high);
+    if rising_edge(data_in) and flag = '0' then
+        flag <= '1';
+        report "BUTTON PRESSED";
+    end if;
+    
+    if rising_edge(clk) and flag = '1' then
+        report "OUTPUT SHOULD BE HIGH";
+        data_out <= '1';
+        data_out <= '0' after clock_period / 2;
+        flag <= '0';
+    end if;
+    
+    if rst = '1' then
+        flag <= '0';
+    end if;
+    
+end process;
 
 end architecture;

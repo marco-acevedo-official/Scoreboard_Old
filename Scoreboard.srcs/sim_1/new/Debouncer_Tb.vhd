@@ -1,13 +1,6 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_textio.all;
-use IEEE.std_logic_arith.all;
-use IEEE.numeric_bit.all;
-use IEEE.numeric_std.all;
-use IEEE.std_logic_signed.all;
-use IEEE.std_logic_unsigned.all;
-use IEEE.math_real.all;
-use IEEE.math_complex.all;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity Debouncer_Tb is
 end Debouncer_Tb;
@@ -24,36 +17,35 @@ architecture Simulation of Debouncer_Tb is
 
     component Debouncer is
     Generic(
-    clock_period : time;
-    reg_width : integer
-    );
-    Port ( 
-           clk : in STD_LOGIC;
-           input_signal : in STD_LOGIC;
-           --sync_signal : in STD_LOGIC;  -- Synchronized input signal
-           debounced_signal : out STD_LOGIC; -- Debounced output signal
-           reg_out : out STD_LOGIC_VECTOR(15 downto 0)
-           );
-    end component;
-    
-    component Synchronizer is
-    Generic(
-    clock_period : time
+        clock_period : time;
+        reg_width : integer
     );
     Port ( 
         clk : in STD_LOGIC;
-       rst : in STD_LOGIC;
+        input_signal : in STD_LOGIC;
+        debounced_signal : out STD_LOGIC; -- Debounced output signal
+        reg_out : out STD_LOGIC_VECTOR(Debounce_Reg_Width-1 downto 0)
+    );
+    end component;
+    
+    component Synchronizer is
+    generic (
+        clock_period : time
+    );
+    port(
+        rst      : in std_logic;
+        clk      : in std_logic;
         data_in  : in std_logic;
         data_out : out std_logic
-           );
+    );
     end component;
 
 begin
 
     UUT_Debouncer: Debouncer 
     generic map(
-    reg_width => Debounce_Reg_Width,
-    clock_period => clk_period
+        reg_width => Debounce_Reg_Width,
+        clock_period => clk_period
     )
     port map (
         clk => sClk,
@@ -65,13 +57,13 @@ begin
     
     UUT_Synchronizer: Synchronizer 
     generic map(
-    clock_period => clk_period
+        clock_period => clk_period
     )
     port map (
-    rst => rst,
-    clk => sClk,
-    data_in => sDebounced,
-    data_out => sync_deb
+        rst => rst,
+        clk => sClk,
+        data_in => sDebounced,
+        data_out => sync_deb
     );
 
     clk_process: process
@@ -87,31 +79,14 @@ begin
     stimulus: process
     begin 
     
-        for i in 1 to 9999 loop
-            if i > 0 and i < 8000 then
+        for i in 1 to 1000 loop
                 sInput <= not sInput;
-                wait for clk_period / 1000;
-            elsif i = 8000 then
-                sInput <= '1';
-                wait for clk_period*50;
-                sInput <= '0';
-                wait for clk_period;
-            end if;
+                wait for clk_period / 10000;
         end loop;
-        
-                for i in 1 to 9999 loop
-            if i > 0 and i < 8000 then
-                sInput <= not sInput;
-                wait for clk_period / 1000;
-            elsif i = 8000 then
-                sInput <= '1';
-                wait for clk_period*50;
-                sInput <= '0';
-                wait for clk_period;
-            end if;
-        end loop;
-        
-        
+        sInput <= '1';
+        wait for clk_period*50;
+        sInput <= '0';
+        wait for clk_period;
         wait;
     end process stimulus;
     
