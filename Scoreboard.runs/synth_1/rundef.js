@@ -24,7 +24,7 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 ISEStep( "vivado",
-         "-log Debouncer.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Debouncer.tcl" );
+         "-log Scoreboard_Final.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Scoreboard_Final.tcl" );
 
 
 

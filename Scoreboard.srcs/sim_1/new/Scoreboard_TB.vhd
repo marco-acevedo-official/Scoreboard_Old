@@ -6,87 +6,32 @@ entity Scoreboard_TB is
 end Scoreboard_TB;
 
 architecture Simulation of Scoreboard_TB is
-    constant clock_period : time := 50 ns;
-    constant Debouncer_Register_Size : integer := 16;
+    constant clock_period : time := 5 ns;
+    constant Debouncer_Register_Size : integer := 4;
     signal clock : std_logic := '0';
     signal reset_button : std_logic := '0';
-    signal increase_button, inc_deb_to_sync, inc_sync_to_sc : std_logic := '0';
-    signal decrease_button : std_logic := '0';
+    signal increase_button, decrease_button : std_logic := '0';
     signal Display_0 : unsigned(6 downto 0) := (others => '0');
     signal Display_1 : unsigned(6 downto 0) := (others => '0');
     signal BCD_0 : std_logic_vector(3 downto 0) := (others => '0');
     signal BCD_1 : std_logic_vector(3 downto 0) := (others => '0');
-    signal Debouncer_Register : STD_LOGIC_VECTOR(Debouncer_Register_Size-1 downto 0) := (others => '0');
-    
-    component Debouncer is
-    generic(
-        clock_period : time;
-        reg_width : integer
-    );
-    port(
-       clk : in STD_LOGIC;
-       input_signal : in STD_LOGIC;
-       debounced_signal : out STD_LOGIC; -- Debounced output signal
-       reg_out : out STD_LOGIC_VECTOR(reg_width-1 downto 0)
-    );
-    end component;
-    
-    component synchronizer  is
-    generic(
-        clock_period : time
-    );
-    port(
-        rst      : in std_logic;
-        clk      : in std_logic;
-        data_in  : in std_logic;
-        data_out : out std_logic
-    );
-    end component;
-    
-    component  Scoreboard is
-    port(
-        clk, rst, inc, dec: in std_logic;
-        seg7disp1, seg7disp0: out unsigned(6 downto 0);
-        bcd1_out, bcd0_out : out std_logic_vector(3 downto 0)--Debug
-    );
-    end component;
- 
-    
+    signal register_inc, register_dec : STD_LOGIC_VECTOR(Debouncer_Register_Size-1 downto 0);
+  
     begin
-
-    deb_inc : Debouncer
-    generic map(
-        clock_period => clock_period,
-        reg_width => Debouncer_Register_Size
-    )
-    port map(
-        clk => clock,
-        input_signal => increase_button,
-        debounced_signal => inc_deb_to_sync,
-        reg_out => Debouncer_Register
-    );
     
-    sync_inc: Synchronizer 
-    generic map(
-        clock_period => clock_period
-    )
-    port map (
-        rst => reset_button,
-        clk => clock,
-        data_in => inc_deb_to_sync,
-        data_out => inc_sync_to_sc
-    );
-    
-    sc : Scoreboard
+    SCORE : entity work.Scoreboard_Final
+    generic map(clock_period => clock_period, reg_width => Debouncer_Register_Size )
     port map(
         clk => clock,
         rst => reset_button,
-        inc => inc_sync_to_sc,
+        inc => increase_button,
         dec => decrease_button,
         seg7disp1 => Display_1,
         seg7disp0 => Display_0,
         bcd1_out => BCD_1,
-        bcd0_out => BCD_0
+        bcd0_out => BCD_0,
+        reg_out_inc => register_inc,
+        reg_out_dec => register_dec
     );
     
     clock_process : process
@@ -97,17 +42,20 @@ architecture Simulation of Scoreboard_TB is
             clock <= '0';
             wait for clock_period / 2;
         end loop;
+        wait;
     end process clock_process;
     
     
-    button_press : process
+    normal_press : process
     begin
-        increase_button <= '0';
-        wait for clock_period;
-        increase_button <= '1';
-        wait for 10 * clock_period;
-        increase_button <= '0';
-        wait for 10000 * clock_period;
-    end process button_press;
-    
+    for i in 1 to 10 loop
+        increase_button <= '0' ;
+        wait for clock_period * 5;
+        increase_button <= '1' ;
+        wait for clock_period * 15;
+    end loop;
+    increase_button <= '0' ;
+    wait;
+    end process normal_press;
+
 end architecture Simulation;

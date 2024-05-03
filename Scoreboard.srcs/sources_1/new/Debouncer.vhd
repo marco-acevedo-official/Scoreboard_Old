@@ -30,13 +30,12 @@ begin
             end if;
         end loop;
         end if;
-        
         if debounce_reg = (debounce_reg'range => '1') then
+          report "ALL REGISTERS ARE 111111111";
           debounced_signal <= '1';
         else
             debounced_signal <= '0';
         end if;
-        
         reg_out <= debounce_reg;
     end process;
 end Behavioral;

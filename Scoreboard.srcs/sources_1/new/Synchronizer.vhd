@@ -16,7 +16,7 @@ end synchronizer;
 
 architecture Behavior of synchronizer is
 signal flag : std_logic := '0';
-begin -- 
+begin
 
 process(clk,data_in,rst)
 begin
@@ -33,12 +33,20 @@ begin
     if rising_edge(clk) and flag = '1' then
         report "Synchronizer data_out Set 1";
         data_out <= '1';
-        data_out <= '0' after clock_period / 2;
+--        data_out <= '0' after clock_period / 2;
+--        report "Synchronizer data_out Set 0";
+--        flag <= '0';
+--        report "Synchronizer FLAG Set 0";
+    end if;
+    if falling_edge(clk) and flag = '1' then
+        data_out <= '0';
+        report "Synchronizer data_out Set 0";
         flag <= '0';
     end if;
     
     if rst = '1' then
         flag <= '0';
+        report "Synchronizer RST Set 1";
     end if;
     
 end process;

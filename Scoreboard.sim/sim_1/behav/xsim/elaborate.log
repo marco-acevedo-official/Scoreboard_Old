@@ -5,4 +5,17 @@ Running: D:/Xilinx/Vivado/2023.2/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling architecture behavioral of entity xil_defaultlib.Debouncer [\Debouncer(clock_period=5000,reg...]
+Compiling architecture behavior of entity xil_defaultlib.synchronizer [\synchronizer(clock_period=5000)...]
+Compiling architecture wiring of entity xil_defaultlib.Button_Filter [\Button_Filter(clock_period=5000...]
+Compiling architecture behavioral of entity xil_defaultlib.Scoreboard [\Scoreboard(clock_period=5000,re...]
+Compiling architecture connections of entity xil_defaultlib.Scoreboard_Final [\Scoreboard_Final(clock_period=5...]
+Compiling architecture simulation of entity xil_defaultlib.scoreboard_tb
+Built simulation snapshot Scoreboard_TB_behav

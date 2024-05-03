@@ -1,6 +1,6 @@
 
 *** Running vivado
-    with args -log Debouncer.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Debouncer.tcl
+    with args -log Scoreboard_Final.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Scoreboard_Final.tcl
 
 
 
@@ -11,49 +11,97 @@
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 
-source Debouncer.tcl -notrace
+source Scoreboard_Final.tcl -notrace
 Command: read_checkpoint -auto_incremental -incremental D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/utils_1/imports/synth_1/Debouncer.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/utils_1/imports/synth_1/Debouncer.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
-Command: synth_design -top Debouncer -part xc7s50csga324-1
+Command: synth_design -top Scoreboard_Final -part xc7s50csga324-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7s50'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s50'
-INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
-INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 30120
+INFO: [Synth 8-7075] Helper process launched with PID 10564
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1040.727 ; gain = 440.656
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1037.371 ; gain = 436.438
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Scoreboard_Final' [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard_Final.vhd:17]
+INFO: [Synth 8-638] synthesizing module 'Button_Filter' [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Button_Filter.vhd:19]
+	Parameter clock_period bound to: 64'b0000000000000000000000000000000000000000100110001001011010000000 
+	Parameter reg_width bound to: 16 - type: integer 
 INFO: [Synth 8-638] synthesizing module 'Debouncer' [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Debouncer.vhd:18]
+	Parameter clock_period bound to: 64'b0000000000000000000000000000000000000000100110001001011010000000 
+	Parameter reg_width bound to: 16 - type: integer 
 WARNING: [Synth 8-614] signal 'debounce_reg' is read in the process but is not in the sensitivity list [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Debouncer.vhd:22]
 INFO: [Synth 8-256] done synthesizing module 'Debouncer' (0#1) [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Debouncer.vhd:18]
+INFO: [Synth 8-638] synthesizing module 'synchronizer' [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Synchronizer.vhd:17]
+	Parameter clock_period bound to: 64'b0000000000000000000000000000000000000000100110001001011010000000 
+WARNING: [Synth 8-614] signal 'flag' is read in the process but is not in the sensitivity list [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Synchronizer.vhd:21]
+INFO: [Synth 8-256] done synthesizing module 'synchronizer' (0#1) [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Synchronizer.vhd:17]
+INFO: [Synth 8-256] done synthesizing module 'Button_Filter' (0#1) [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Button_Filter.vhd:19]
+INFO: [Synth 8-638] synthesizing module 'Scoreboard' [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard.vhd:17]
+	Parameter clock_period bound to: 64'b0000000000000000000000000000000000000000100110001001011010000000 
+	Parameter reg_width bound to: 16 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'Scoreboard' (0#1) [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard.vhd:17]
+INFO: [Synth 8-256] done synthesizing module 'Scoreboard_Final' (0#1) [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard_Final.vhd:17]
+WARNING: [Synth 8-6014] Unused sequential element count_reg was removed.  [D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/sources_1/new/Scoreboard.vhd:37]
+WARNING: [Synth 8-7129] Port data_in in module synchronizer is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1144.816 ; gain = 544.746
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1144.816 ; gain = 544.746
+Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s50csga324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1144.816 ; gain = 544.746
----------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7s50csga324-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1144.816 ; gain = 544.746
 ---------------------------------------------------------------------------------
+Start Preparing Guide Design
+---------------------------------------------------------------------------------
+CRITICAL WARNING: [Synth 8-6895] The reference checkpoint D:/Users/marco/vivado/Scoreboard/Scoreboard.srcs/utils_1/imports/synth_1/Debouncer.dcp is not suitable for use with incremental synthesis for this design. Please regenerate the checkpoint for this design with -incremental_synth switch in the same Vivado session that synth_design has been run. Synthesis will continue with the default flow
+---------------------------------------------------------------------------------
+Finished Doing Graph Differ : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Preparing Guide Design : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1144.898 ; gain = 543.965
+---------------------------------------------------------------------------------
+
+
+Incremental Synthesis Report Summary:
+
+1. Incremental synthesis run: no
+
+   Reason for not running incremental synthesis : 
+
+
+INFO: [Synth 8-7130] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 No constraint files found.
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    4 Bit       Adders := 2     
+	   2 Input    3 Bit       Adders := 1     
 +---Registers : 
-	               16 Bit    Registers := 1     
+	               16 Bit    Registers := 2     
+	                4 Bit    Registers := 2     
+	                3 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   6 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 3     
+	   4 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 9     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -72,20 +120,20 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1321.828 ; gain = 721.758
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:16 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1322.676 ; gain = 722.605
+Finished Timing Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1322.676 ; gain = 722.605
+Finished Technology Mapping : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -103,37 +151,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -150,39 +198,43 @@ Report Cell Usage:
 |      |Cell |Count |
 +------+-----+------+
 |1     |BUFG |     1|
-|2     |LUT6 |     3|
-|3     |FDRE |    16|
-|4     |IBUF |     2|
-|5     |OBUF |    17|
+|2     |FDRE |    32|
+|3     |IBUF |     3|
+|4     |OBUF |    54|
 +------+-----+------+
 
 Report Instance Areas: 
-+------+---------+-------+------+
-|      |Instance |Module |Cells |
-+------+---------+-------+------+
-|1     |top      |       |    39|
-+------+---------+-------+------+
++------+-----------+----------------+------+
+|      |Instance   |Module          |Cells |
++------+-----------+----------------+------+
+|1     |top        |                |    90|
+|2     |  DECREASE |Button_Filter   |    16|
+|3     |    deb    |Debouncer_1     |    16|
+|4     |  INCREASE |Button_Filter_0 |    16|
+|5     |    deb    |Debouncer       |    16|
++------+-----------+----------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 2 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
-Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1322.734 ; gain = 722.664
+Synthesis finished with 0 errors, 1 critical warnings and 5 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:20 . Memory (MB): peak = 1323.543 ; gain = 722.609
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1334.746 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1326.602 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1432.688 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1421.215 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 The system cannot find the path specified.
-Synth Design complete | Checksum: 5895638f
+Synth Design complete | Checksum: 118c6377
 INFO: [Common 17-83] Releasing license: Synthesis
-16 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+23 Infos, 5 Warnings, 1 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1432.688 ; gain = 838.652
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1432.688 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'D:/Users/marco/vivado/Scoreboard/Scoreboard.runs/synth_1/Debouncer.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_utilization -file Debouncer_utilization_synth.rpt -pb Debouncer_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Apr 30 21:03:01 2024...
+synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 1421.215 ; gain = 827.191
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1421.215 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'D:/Users/marco/vivado/Scoreboard/Scoreboard.runs/synth_1/Scoreboard_Final.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Scoreboard_Final_utilization_synth.rpt -pb Scoreboard_Final_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu May  2 21:38:14 2024...
