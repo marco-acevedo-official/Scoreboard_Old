@@ -1,7 +1,0 @@
-Running: xsim.dir/Scoreboard_Final_behav/xsimk.exe -simmode gui -wdb Scoreboard_Final_behav.wdb -simrunnum 0 -socket 56937
-Design successfully loaded
-Design Loading Memory Usage: 8624 KB (Peak: 8624 KB)
-Design Loading CPU Usage: 0 ms
-Simulation completed
-Simulation Memory Usage: 9156 KB (Peak: 9156 KB)
-Simulation CPU Usage: 0 ms
